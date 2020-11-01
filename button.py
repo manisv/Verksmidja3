@@ -1,43 +1,26 @@
-"""
-'digital_in.py'
-==================================
-Example of sending button values
-to an Adafruit IO feed.
-
-Author(s): Brent Rubell, Todd Treece
-"""
-# Import standard python modules
 import time
 
 import RPi.GPIO as GPIO
 
-# import Adafruit IO REST client.
 from Adafruit_IO import Client, Feed, RequestError
 
-# Set to your Adafruit IO key.
-# Remember, your key is a secret,
-# so make sure not to publish it when you publish this code!
-ADAFRUIT_IO_KEY = 'aio_tXUs36pUccPEqWQ4RVQRsu6GDqXp'
+ADAFRUIT_IO_KEY = 'key'
 
-# Set to your Adafruit IO username.
-# (go to https://accounts.adafruit.com to find your username)
-ADAFRUIT_IO_USERNAME = 'manisv'
 
-# Create an instance of the REST client.
+ADAFRUIT_IO_USERNAME = 'username'
+
 aio = Client(ADAFRUIT_IO_USERNAME, ADAFRUIT_IO_KEY)
 
-def button_callback(channel):
-    print("Button was pushed!")
 
-try: # if we have a 'digital' feed
+try: 
     digital = aio.feeds('digital')
-except RequestError: # create a digital feed
+except RequestError: 
     feed = Feed(name="digital")
     digital = aio.create_feed(feed)
 
-# button set up
-GPIO.setwarnings(False) # Ignore warning for now
-GPIO.setmode(GPIO.BCM) # Use physical pin numbering
+
+GPIO.setwarnings(False) 
+GPIO.setmode(GPIO.BCM) 
 GPIO.setup(12, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 button_current = GPIO.input(12)
 
@@ -52,5 +35,5 @@ while True:
     print('Button -> ', button_current)
     aio.send(digital.key, button_current)
 
-    # avoid timeout from adafruit io
+
     time.sleep(1)
