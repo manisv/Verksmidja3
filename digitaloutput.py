@@ -1,11 +1,3 @@
-"""
-'digital_out.py'
-===================================
-Example of turning on and off a LED
-from the Adafruit IO Python Client
-Author(s): Brent Rubell, Todd Treece
-"""
-
 import time
 
 import RPi.GPIO as GPIO  
